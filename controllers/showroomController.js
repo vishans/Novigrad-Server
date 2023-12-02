@@ -140,3 +140,60 @@ exports.updateShowroomServices = async (req, res) =>{
          })
     }
  }
+
+
+ exports.getServicesOfferedByShowroom = async (req, res) =>{
+    
+    try{
+         const data = await Service.findOne(req.body).select('services');
+         res.json({
+             status: 'success',
+             data
+         })
+    }
+    catch(err){
+         res.json({
+             status: 'fail',
+             message: err
+         })
+    }
+ }
+
+ exports.findShowroom = async (req, res) =>{
+    console.log(req.body)
+    
+    try{
+        const addressRegex = new RegExp(req.body.address, 'i');
+
+        
+
+        const showrooms = await Service.find({
+            $and: [
+                //{ address: addressRegex },
+                { hours: req.body.hours },
+                { services: { $in: [req.body.service] } }
+            ]
+        });
+        console.log(showrooms)
+
+        if (showrooms.length === 0) {
+            console.log('none found')
+            throw new Error('No showrooms found');
+        }
+
+        showroomNames = showrooms.map(showroom => showroom.name);
+
+        res.json({
+             status: 'success',
+             showrooms: showroomNames
+         })
+    }
+    catch(err){
+         res.json({
+             status: 'fail',
+             message: err
+         })
+    }
+ }
+
+ 

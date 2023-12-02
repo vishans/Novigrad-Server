@@ -14,6 +14,12 @@ router.route('/getShowroom').post(showroomController.getShowroomByName);
 
 router.route('/updateServices').post(showroomController.updateShowroomServices);
 
+router.route('/getServices').post(showroomController.getServicesOfferedByShowroom);
+
+router.route('/findShowroom').post(showroomController.findShowroom);
+
+
+
 
 
 
