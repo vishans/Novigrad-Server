@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const userRoute = require('./routes/userRoutes');
 const serviceRoute = require('./routes/serviceRoutes');
 const showroomRoute = require('./routes/showroomRoutes');
+const requestRoute = require('./routes/requestRoutes');
+
 
 
 
@@ -25,6 +27,8 @@ mongoose.connect('mongodb+srv://mario:1234@novigrad.cpmjhf3.mongodb.net/?retryWr
 app.use('/user',userRoute);
 app.use('/service',serviceRoute);
 app.use('/showroom',showroomRoute);
+app.use('/request',requestRoute);
+
 
 
 
