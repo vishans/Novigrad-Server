@@ -81,3 +81,42 @@ exports.queryRequest = async (req, res) =>{
         )
     }
 }
+
+exports.getUniqueShowroomsForUser = async (req, res) => {
+    try {
+      // MongoDB aggregation pipeline to get unique showrooms for the given username
+      const uniqueShowrooms = await Request.aggregate([
+        {
+          $match: {
+            username: req.body.username // Filter requests by the provided username
+          }
+        },
+        {
+          $group: {
+            _id: '$showroom' // Group by showroom field
+          }
+        },
+        {
+          $project: {
+            showroom: '$_id', // Project the _id field as showroom
+            _id: 0 // Exclude _id from the result
+          }
+        }
+      ]);
+  
+      // Extract showrooms from the aggregation result
+      const showroomsArray = uniqueShowrooms.map(entry => entry.showroom);
+  
+      res.json({status: "success",
+    showrooms : showroomsArray}
+    )
+      return showroomsArray;
+    } catch (error) {
+      // Handle any potential errors
+      console.error('Error fetching showrooms:', error);
+      res.json({
+        status: "fail",
+        showrooms: null
+      })
+    }
+  }

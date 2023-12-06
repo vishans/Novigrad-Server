@@ -11,4 +11,7 @@ router.route('/queryRequest')
 router.route('/setRequestStatus')
 .post(requestController.setRequestStatus);
 
+router.route('/getUserShowrooms')
+.post(requestController.getUniqueShowroomsForUser);
+
 module.exports = router;
