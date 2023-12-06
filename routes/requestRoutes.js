@@ -5,7 +5,10 @@ const router = express.Router();
 router.route('/submitRequest')
 .post(requestController.submitRequest);
 
-router.route('/getRequestByUsername')
-.post(requestController.getRequestByUser);
+router.route('/queryRequest')
+.post(requestController.queryRequest);
+
+router.route('/setRequestStatus')
+.post(requestController.setRequestStatus);
 
 module.exports = router;
