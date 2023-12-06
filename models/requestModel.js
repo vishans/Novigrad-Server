@@ -59,13 +59,22 @@ const requestSchema = new mongoose.Schema({
     },
     values:{
         type: [String],
-        validate: {
+        validate: [{
             validator: function(value) {
                 // Check if the array is not empty and has the same length as 'fields'
                 return value.length > 0 && value.length === this.fields.length;
             },
             message: 'Values array must not be empty and must have the same number of items as fields'
-        },
+        }, 
+        {
+            validator: function(value) {
+                // Check if all elements in the array are non-empty strings
+                // this fixes the issue I had during the presentation 
+                // when I was able to submit a request with an empty field
+                return value.every(val => val.trim().length > 0);
+            },
+            message: 'Values array cannot contain empty strings'
+        }],
         required: true,
     },
     status:{
